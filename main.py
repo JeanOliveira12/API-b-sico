@@ -15,6 +15,13 @@ def home():
 def criar_usuario(usuario: Usuario):
     usuario_dict = usuario.dict()
     
+    for u in usuarios:
+        if u["email"] == usuario_dict["email"]:
+            raise HTTPException(
+                status_code=400,
+                detail="Email já cadastrado."
+            )
+
     novo_id = max([u["id"] for u in usuarios], default=0) + 1
     usuario_dict["id"] = novo_id
     
